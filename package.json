@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon bin/index.js",
     "build": "babel src -d bin",
-    "install": "babel-node src/install.js",
+    "postinstall": "babel-node src/install.js",
     "webpack": "webpack"
   },
   "keywords": [
