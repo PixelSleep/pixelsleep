@@ -5,7 +5,8 @@
   "description": "Sleep well",
   "main": "bin/index.js",
   "scripts": {
-    "start": "nodemon bin/index.js",
+    "start": "nodemon src/index.js --exec babel-node",
+    "serve": "node bin/index.js",
     "build": "babel src -d bin",
     "postinstall": "babel-node src/install.js",
     "webpack": "webpack"
