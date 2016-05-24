@@ -13,9 +13,9 @@ connection.connect(err => {
 connection.query(`
   CREATE TABLE ${settings.database}.\`hours\` (
     \`id\` INT NOT NULL,
-    \`tijd_gaan_slapen\` DATETIME,
-    \`tijd_opgestaan\` DATETIME,
-    \`gewenste_slaaptijd\` DATETIME,
+    \`tijd_gaan_slapen\` DATETIME NULL,
+    \`tijd_opgestaan\` DATETIME NULL,
+    \`gewenste_slaaptijd\` INT NULL,
     PRIMARY KEY (\`id\`)
   );
 `, err => {

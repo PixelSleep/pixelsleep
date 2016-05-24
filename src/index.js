@@ -1,16 +1,16 @@
-//import mysql from 'mysql';
 import express from 'express';
 import path from 'path';
+import {connection} from './database';
 
-// Mysql
-/*let connection = mysql.createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: 'secret',
-  database: 'pixelsleep',
+// Connect to the database
+connection.connect(err => {
+  // If there is an error, display the message and exit the program
+  if(err) {
+    console.error('Error connection' + err.stack);
+    process.exit();
+  }
+  console.log('Succesfully connected as id %d', connection.threadId);
 });
-connection.connect();*/
 
 // Initialiseren van servers
 let app = express();
@@ -20,19 +20,10 @@ app.use(express.static('public'));
 
 // API
 app.get('/api', (req, res) => {
-  let gegevens = [
-    {
-      gaan: '23:00',
-      willen: '8:00',
-      geslapen: '8:00'
-    },
-    {
-      gaan: '22:00',
-      willen: '8:00',
-      geslapen: '9:00'
-    }
-  ];
-  res.json(gegevens);
+  let query = connection.query('SELECT tijd_gaan_slapen, tijd_opgestaan, gewenste_slaaptijd FROM `hours`', (err, results) => {
+    console.log(results);
+    res.json(results);
+  });
 });
 
 app.listen(3000, () => {
