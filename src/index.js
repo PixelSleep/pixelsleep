@@ -12,20 +12,23 @@ connection.connect(err => {
   console.log('Succesfully connected as id %d', connection.threadId);
 });
 
-// Initialiseren van servers
+// Init the express server
 let app = express();
 
-// Public directory instellen voor statische bestanden
+// The public directory for static files is public
 app.use(express.static('public'));
 
-// API
+/**
+ * GET: ./api
+ * Get all the data from the database.
+ */
 app.get('/api', (req, res) => {
   let query = connection.query('SELECT tijd_gaan_slapen, tijd_opgestaan, gewenste_slaaptijd FROM `hours`', (err, results) => {
-    console.log(results);
     res.json(results);
   });
 });
 
+// Listen for requests on port 3000
 app.listen(3000, () => {
   console.log('Listening on port 3000');
 });

@@ -10,8 +10,9 @@ connection.connect(err => {
   console.log('Succesfully connected as id %d', connection.threadId);
 });
 
+// Execute a query to create a table where we save the hours
 connection.query(`
-  CREATE TABLE ${settings.database}.\`hours\` (
+  CREATE TABLE ${settings.schema}.\`hours\` (
     \`id\` INT NOT NULL,
     \`tijd_gaan_slapen\` DATETIME NULL,
     \`tijd_opgestaan\` DATETIME NULL,
