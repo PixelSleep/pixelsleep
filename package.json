@@ -7,9 +7,9 @@
   "scripts": {
     "start": "nodemon src/index.js --exec babel-node",
     "serve": "node bin/index.js",
-    "build": "babel src -d bin",
+    "build": "babel src -d bin && webpack",
     "postinstall": "babel-node src/install.js",
-    "webpack": "webpack"
+    "webpack": "webpack --watch"
   },
   "keywords": [
     "pixelsleep"
@@ -18,7 +18,8 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.13.4",
-    "mysql": "^2.10.2"
+    "mysql": "^2.10.2",
+    "pug": "^2.0.0-alpha8"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
