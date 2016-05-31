@@ -17,7 +17,6 @@ let app = express();
 
 // The public directory for static files is public
 app.use(express.static('public'));
-
 // Setup views
 app.set('view engine', 'pug');
 
@@ -26,7 +25,7 @@ app.set('view engine', 'pug');
  * The front page with a table
  */
 app.get('/', (req, res) => {
-  res.render('index.pug')
+  res.render('index.pug');
 });
 
 /**

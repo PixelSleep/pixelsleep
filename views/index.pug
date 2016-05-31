@@ -16,14 +16,25 @@ html
 						nav.secondary_header
 							ul
 								li
-									a(href="index") TABEL
-									a(href="over") OVER
-									a(href="hoe") HOE GEBRUIKEN
+									a(href="/") TABEL
+									a(href="/over") OVER
+									a(href="/hoe") HOE GEBRUIKEN
 				div
 					canvas#clock(width="400" height="200")
 				h2 Wekker instellen
-				input(type="time")
-				button Bevestingen
+				h2 Opstaan
+				section.ingeven
+					input(type="time")
+				
+				h2 Gaan slapen
+				section.ingeven
+					input(type="time")
+						
+				h2 Slaap tijd
+				section.ingeven
+					input(type="time" readonly)
+					button Bevestingen
+				
 				table(border="1" width="100%")
 					thead
 						tr
