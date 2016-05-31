@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import {connection} from './database';
+import {settings, connection} from './database';
 
 // Connect to the database
 connection.connect(err => {
@@ -21,11 +21,29 @@ app.use(express.static('public'));
 app.set('view engine', 'pug');
 
 /**
+ * TODO: make promise out of this
+ */
+function getResults(cb, id = 0, howMany = 25) {
+  let query = ' SELECT tijd_gaan_slapen, tijd_opgestaan, gewenste_slaaptijd'
+            + ' FROM `' + settings.schema + '`.`hours` '
+            + ' WHERE `id` = ' + id
+            + ' LIMIT ' + howMany;
+
+  connection.query(query, (err, results) => {
+    if(err) console.error(err);
+    cb(results);
+  });
+}
+
+/**
  * GET: ./
  * The front page with a table
  */
 app.get('/', (req, res) => {
-  res.render('index.pug');
+  getResults((results) => {
+    res.json(results);
+    //res.render('index.pug');
+  });
 });
 
 /**
@@ -33,7 +51,7 @@ app.get('/', (req, res) => {
  * Get all the data from the database.
  */
 app.get('/api', (req, res) => {
-  let query = connection.query('SELECT tijd_gaan_slapen, tijd_opgestaan, gewenste_slaaptijd FROM `hours`', (err, results) => {
+  connection.query('SELECT tijd_gaan_slapen, tijd_opgestaan, gewenste_slaaptijd FROM `hours`', (err, results) => {
     res.json(results);
   });
 });
