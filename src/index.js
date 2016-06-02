@@ -41,8 +41,7 @@ function getResults(cb, id = 0, howMany = 25) {
  */
 app.get('/', (req, res) => {
   getResults((results) => {
-    console.log(results);
-    res.render('index.pug', results);
+    res.render('index.pug', {results});
   });
 });
 

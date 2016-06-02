@@ -43,12 +43,13 @@ html
 							th Tijd opgestaan
 							th Tijd geslapen
 					tbody
-						tr
-							td Test1
-							td Test2
-							td Test3
-							td Test4
-				
+						for result in results
+							tr
+								- const {tijd_gaan_slapen, tijd_opgestaan} = result
+								td= tijd_gaan_slapen
+								td 2
+								td= tijd_opgestaan
+								td 4
 				footer(class="secondary_header footer")
 					div.copyright &copy; 2016 -
 						strong PIXEL SLEEP
