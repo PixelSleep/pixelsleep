@@ -3,6 +3,7 @@ import path from 'path';
 import mysql from 'mysql';
 import {settings, connection} from './database';
 import moment from 'moment';
+import leftPad from 'left-pad';
 
 // Connect to the database
 connection.connect(err => {
@@ -41,12 +42,17 @@ function getResults(cb, id = 0, howMany = 25) {
     // Also calculate the time they slept.
     results.map((result) => {
       try {
-        let tijd_gaan_slapen = moment(result.tijd_gaan_slapen);
-        let tijd_opgestaan = moment(result.tijd_opgestaan);
-        let hours = tijd_opgestaan.diff(tijd_gaan_slapen, 'hours');
-        let minutes = tijd_opgestaan.diff(tijd_gaan_slapen, 'minutes') - (hours * 60)
+        const tijd_gaan_slapen = moment(result.tijd_gaan_slapen);
         result.tijd_gaan_slapen = tijd_gaan_slapen.format(format);
+
+        const tijd_opgestaan = moment(result.tijd_opgestaan);
         result.tijd_opgestaan = tijd_opgestaan.format(format);
+
+        const tijd_gewenst_opstaan = tijd_gaan_slapen.add(result.gewenste_slaaptijd, 'seconds');
+        result.tijd_gewenst_opstaan = tijd_gewenst_opstaan.format(format);
+
+        const hours = leftPad(tijd_opgestaan.diff(tijd_gaan_slapen, 'hours'), 2, 0);
+        const minutes = leftPad(tijd_opgestaan.diff(tijd_gaan_slapen, 'minutes') - (hours * 60), 2, 0);
         result.tijd_geslapen = {hours, minutes};
       } catch (e) {
         console.error(e);
