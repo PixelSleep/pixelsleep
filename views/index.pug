@@ -1,57 +1,32 @@
-doctype
-html
-	head
-		meta(charset="utf-8")
-		meta(http-equiv="X-UA-Compatible", content="IE=edge")
-		meta(name="viewport", content="width=device-width, initial-scale=1")
-		title Pixel Sleep
-		link(href="css/stylesheet.css", rel="stylesheet", type="text/css")
-	body
-		div.container
-			section.middel
-				header
-					div.primary_header
-						h1.title
-							img(src="images/naam_logo.png", alt="logo", width="399", height="79")
-						nav.secondary_header
-							ul
-								li
-									a(href="/") TABEL
-									a(href="/over") OVER
-									a(href="/hoe") HOE GEBRUIKEN
-				
-				canvas#clock(width="400" height="200")
-				
-				form(id="tijden", method="POST", action="/api/instellenvantijden")
-					legend Wekker instellen
-					label(for="opstaan") Opstaan
-					input(type="time", name="opstaan")
-					
-					label(for="gaanSlapen") Gaan slapen
-					input(type="time", name="gaanSlapen")
-							
-					label(for="slaaptijd") Slaaptijd
-					input(type="time", name="slaaptijd", readonly)
-					
-					input(type="submit" value="Bevestingen")
-				
-				table.tijd(border="1")
-					thead
-						tr
-							th Tijd gaan slapen
-							th Gewenste tijd opstaan
-							th Tijd opgestaan
-							th Tijd geslapen
-					tbody
-						for result in results
-							tr
-								- const {tijd_gaan_slapen, tijd_opgestaan, tijd_geslapen, tijd_gewenst_opstaan} = result
-								td= tijd_gaan_slapen
-								td= tijd_gewenst_opstaan
-								td= tijd_opgestaan
-								td= tijd_geslapen.hours + ':' + tijd_geslapen.minutes
+extends ./layout.pug
 
-				footer(class="secondary_header footer")
-					div.copyright &copy; 2016 -
-						strong PIXEL SLEEP
-				script(src="js/bundle.js")
+block content	
+	canvas#clock(width="400" height="200")
+	form(id="tijden", method="POST", action="/api/instellenvantijden")
+		legend Wekker instellen
+		label(for="opstaan") Opstaan
+		input(type="time", name="opstaan")
+			
+		label(for="gaanSlapen") Gaan slapen
+		input(type="time", name="gaanSlapen")
+							
+		label(for="slaaptijd") Slaaptijd
+		input(type="time", name="slaaptijd", readonly)
+						
+		input(type="submit" value="Bevestingen")
+					
+	table.tijd(border="1")
+		thead
+			tr
+				th Tijd gaan slapen
+				th Gewenste tijd opstaan
+				th Tijd opgestaan
+				th Tijd geslapen
+		tbody
+			for result in results
+				tr
+					- const {tijd_gaan_slapen, tijd_opgestaan, tijd_geslapen, tijd_gewenst_opstaan} = result
+					td= tijd_gaan_slapen
+					td= tijd_gewenst_opstaan
+					td= tijd_opgestaan
+					td= tijd_geslapen.hours + ':' + tijd_geslapen.minutes
