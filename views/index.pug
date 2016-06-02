@@ -45,11 +45,12 @@ html
 					tbody
 						for result in results
 							tr
-								- const {tijd_gaan_slapen, tijd_opgestaan} = result
+								- const {tijd_gaan_slapen, tijd_opgestaan, tijd_geslapen} = result
 								td= tijd_gaan_slapen
 								td 2
 								td= tijd_opgestaan
-								td 4
+								td= tijd_geslapen
+
 				footer(class="secondary_header footer")
 					div.copyright &copy; 2016 -
 						strong PIXEL SLEEP

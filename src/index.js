@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import {settings, connection} from './database';
+import moment from 'moment';
 
 // Connect to the database
 connection.connect(err => {
@@ -31,6 +32,20 @@ function getResults(cb, id = 0, howMany = 25) {
 
   connection.query(query, (err, results) => {
     if(err) console.error(err);
+    const format = 'DD/MM/YY HH:mm';
+
+    // Iterate trough each result and give them the format required.
+    // Also calculate the time they slept.
+    results.map((result) => {
+      try {
+        result.tijd_gaan_slapen = moment(result.tijd_gaan_slapen).format(format);
+        result.tijd_opgestaan = moment(result.tijd_opgestaan).format(format);
+      } catch (e) {
+        console.error(e);
+      }
+      return result;
+    });
+
     cb(results);
   });
 }
