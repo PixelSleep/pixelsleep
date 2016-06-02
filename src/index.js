@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import mysql from 'mysql';
 import {settings, connection} from './database';
 import moment from 'moment';
 
@@ -25,10 +26,12 @@ app.set('view engine', 'pug');
  * TODO: make promise out of this
  */
 function getResults(cb, id = 0, howMany = 25) {
-  let query = ' SELECT tijd_gaan_slapen, tijd_opgestaan, gewenste_slaaptijd'
-            + ' FROM `' + settings.schema + '`.`hours` '
-            + ' WHERE `id` = ' + id
-            + ' LIMIT ' + howMany;
+  const sql = `SELECT \`tijd_gaan_slapen\`, \`tijd_opgestaan\`, \`gewenste_slaaptijd\`
+               FROM ??.\`hours\`
+               WHERE \`id\` = ?
+               LIMIT ?`;
+  const inserts = [settings.schema, id, howMany];
+  const query = mysql.format(sql, inserts);
 
   connection.query(query, (err, results) => {
     if(err) console.error(err);

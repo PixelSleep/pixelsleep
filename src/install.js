@@ -7,7 +7,6 @@ connection.connect(err => {
     console.error('Error connection' + err.stack);
     process.exit();
   }
-  console.log('Succesfully connected as id %d', connection.threadId);
 });
 
 // Execute a query to create a table where we save the hours
