@@ -28,7 +28,7 @@ app.set('view engine', 'pug');
 function getResults(cb, id = 0, howMany = 25) {
   const sql = `SELECT \`tijd_gaan_slapen\`, \`tijd_opgestaan\`, \`gewenste_slaaptijd\`
                FROM ??.\`hours\`
-               WHERE \`id\` = ?
+               WHERE \`id\` >= ?
                LIMIT ?`;
   const inserts = [settings.schema, id, howMany];
   const query = mysql.format(sql, inserts);
@@ -41,14 +41,18 @@ function getResults(cb, id = 0, howMany = 25) {
     // Also calculate the time they slept.
     results.map((result) => {
       try {
-        result.tijd_gaan_slapen = moment(result.tijd_gaan_slapen).format(format);
-        result.tijd_opgestaan = moment(result.tijd_opgestaan).format(format);
+        let tijd_gaan_slapen = moment(result.tijd_gaan_slapen);
+        let tijd_opgestaan = moment(result.tijd_opgestaan);
+        let hours = tijd_opgestaan.diff(tijd_gaan_slapen, 'hours');
+        let minutes = tijd_opgestaan.diff(tijd_gaan_slapen, 'minutes') - (hours * 60)
+        result.tijd_gaan_slapen = tijd_gaan_slapen.format(format);
+        result.tijd_opgestaan = tijd_opgestaan.format(format);
+        result.tijd_geslapen = {hours, minutes};
       } catch (e) {
         console.error(e);
       }
       return result;
     });
-
     cb(results);
   });
 }
