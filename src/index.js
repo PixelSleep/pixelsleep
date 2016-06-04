@@ -22,7 +22,9 @@ app.set('view engine', 'pug');
 function getResults(cb, id = 0) {
   const sql = `SELECT \`tijd_gaan_slapen\`, \`tijd_opgestaan\`, \`gewenste_slaaptijd\`
                FROM ??.\`hours\`
-               WHERE \`id\` >= ?`;
+               WHERE \`id\` >= ?
+               ORDER BY \`tijd_gaan_slapen\` DESC 
+               `;
   const inserts = [database.settings.schema, id];
   const query = mysql.format(sql, inserts);
 
