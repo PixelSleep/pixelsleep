@@ -19,7 +19,7 @@ app.set('view engine', 'pug');
 /**
  * TODO: make promise out of this
  */
-function getResults(cb, id = 0,) {
+function getResults(cb, id = 0) {
   const sql = `SELECT \`tijd_gaan_slapen\`, \`tijd_opgestaan\`, \`gewenste_slaaptijd\`
                FROM ??.\`hours\`
                WHERE \`id\` >= ?`;
