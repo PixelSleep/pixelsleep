@@ -1,12 +1,12 @@
 import express from 'express';
 import path from 'path';
 import mysql from 'mysql';
-import {connect, connection, settings} from './database';
+import * as database from './database';
 import moment from 'moment';
 import leftPad from 'left-pad';
 
 // Connect to the datase
-connect();
+database.connect();
 
 // Init the express server
 let app = express();
@@ -19,15 +19,14 @@ app.set('view engine', 'pug');
 /**
  * TODO: make promise out of this
  */
-function getResults(cb, id = 0, howMany = 25) {
+function getResults(cb, id = 0,) {
   const sql = `SELECT \`tijd_gaan_slapen\`, \`tijd_opgestaan\`, \`gewenste_slaaptijd\`
                FROM ??.\`hours\`
-               WHERE \`id\` >= ?
-               LIMIT ?`;
-  const inserts = [settings.schema, id, howMany];
+               WHERE \`id\` >= ?`;
+  const inserts = [database.settings.schema, id];
   const query = mysql.format(sql, inserts);
 
-  connection.query(query, (err, results) => {
+  database.connection.query(query, (err, results) => {
     if(err) console.error(err);
     const format = 'DD/MM/YY HH:mm';
 
@@ -63,16 +62,6 @@ function getResults(cb, id = 0, howMany = 25) {
 app.get('/', (req, res) => {
   getResults((results) => {
     res.render('index.pug', {results});
-  });
-});
-
-/**
- * GET: ./api
- * Get all the data from the database.
- */
-app.get('/api', (req, res) => {
-  connection.query('SELECT tijd_gaan_slapen, tijd_opgestaan, gewenste_slaaptijd FROM `hours`', (err, results) => {
-    res.json(results);
   });
 });
 
