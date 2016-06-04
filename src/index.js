@@ -23,7 +23,7 @@ function getResults(cb, id = 0) {
   const sql = `SELECT \`tijd_gaan_slapen\`, \`tijd_opgestaan\`, \`gewenste_slaaptijd\`
                FROM ??.\`hours\`
                WHERE \`id\` >= ?
-               ORDER BY \`tijd_gaan_slapen\` DESC 
+               ORDER BY \`tijd_gaan_slapen\` DESC
                `;
   const inserts = [database.settings.schema, id];
   const query = mysql.format(sql, inserts);
@@ -66,6 +66,22 @@ app.get('/', (req, res) => {
     res.render('index.pug', {results});
   });
 });
+
+/**
+ * GET: ./hoe
+ * Information about how the app works
+ */
+app.get('/hoe', (req, res) => {
+  res.render('hoe.pug')
+});
+
+/**
+ * GET: ./over
+ * Information about pixelsleep
+ */
+app.get('/over', (req, res) => {
+  res.render('over.pug');
+})
 
 // Listen for requests on port 3000
 app.listen(3000, () => {
