@@ -40,7 +40,7 @@ function getResults(cb, id = 0,) {
         const tijd_opgestaan = moment(result.tijd_opgestaan);
         result.tijd_opgestaan = tijd_opgestaan.format(format);
 
-        const tijd_gewenst_opstaan = tijd_gaan_slapen.add(result.gewenste_slaaptijd, 'seconds');
+        const tijd_gewenst_opstaan = tijd_gaan_slapen.clone().add(result.gewenste_slaaptijd, 'seconds');
         result.tijd_gewenst_opstaan = tijd_gewenst_opstaan.format(format);
 
         const hours = leftPad(tijd_opgestaan.diff(tijd_gaan_slapen, 'hours'), 2, 0);
