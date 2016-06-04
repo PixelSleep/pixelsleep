@@ -17,3 +17,14 @@ export const settings = {
 }
 
 export const connection = createConnection(settings);
+
+export function connect() {
+  connection.connect(err => {
+    // If there is an error, display the message and exit the program
+    if(err) {
+      console.error('Error connection' + err.stack);
+      process.exit();
+    }
+    console.log('Succesfully connected as id %d', connection.threadId);
+  });
+}

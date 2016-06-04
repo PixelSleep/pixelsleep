@@ -1,13 +1,7 @@
-import {connection, settings} from './database';
+import {connect, connection, settings} from './database';
 
 // Connect to the database
-connection.connect(err => {
-  // If there is an error, display the message and exit the program
-  if(err) {
-    console.error('Error connection' + err.stack);
-    process.exit();
-  }
-});
+connect();
 
 // Execute a query to create a table where we save the hours
 connection.query(`

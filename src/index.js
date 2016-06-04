@@ -1,19 +1,12 @@
 import express from 'express';
 import path from 'path';
 import mysql from 'mysql';
-import {settings, connection} from './database';
+import {connect, connection, settings} from './database';
 import moment from 'moment';
 import leftPad from 'left-pad';
 
-// Connect to the database
-connection.connect(err => {
-  // If there is an error, display the message and exit the program
-  if(err) {
-    console.error('Error connection' + err.stack);
-    process.exit();
-  }
-  console.log('Succesfully connected as id %d', connection.threadId);
-});
+// Connect to the datase
+connect();
 
 // Init the express server
 let app = express();
