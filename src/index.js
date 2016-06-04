@@ -36,12 +36,12 @@ function getResults(cb, id = 0) {
     const mappedResults = results.map((result) => {
       let tijdGaanSlapen = moment(result.tijd_gaan_slapen);
       let tijdOpgestaan = moment(result.tijd_opgestaan);
-      let tijdGewenstOpstaan = tijdGaanSlapen.clone().add(result.gewenesteSlaaptijd, 'seconds');
+      const tijdGewenstOpstaan = tijdGaanSlapen.clone().add(result.gewenesteSlaaptijd, 'seconds')
+                                                       .format(format);
       const hours = leftPad(tijdOpgestaan.diff(tijdGaanSlapen, 'hours'), 2, 0);
       const minutes = leftPad(tijdOpgestaan.diff(tijdGaanSlapen, 'minutes') - (hours * 60), 2, 0);
       tijdGaanSlapen = tijdGaanSlapen.format(format);
       tijdOpgestaan = tijdOpgestaan.format(format);
-      tijdGewenstOpstaan = tijdGewenstOpstaan.format(format);
 
       return {
         tijdGaanSlapen,
