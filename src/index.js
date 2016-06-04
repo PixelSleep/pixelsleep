@@ -38,8 +38,8 @@ function getResults(cb, id = 0) {
       let tijdOpgestaan = moment(result.tijd_opgestaan);
       const tijdGewenstOpstaan = tijdGaanSlapen.clone().add(result.gewenste_slaaptijd, 'seconds')
                                                       .format(format);
-      const hours = leftPad(tijdOpgestaan.diff(tijdGaanSlapen, 'hours'), 2, 0);
-      const minutes = leftPad(tijdOpgestaan.diff(tijdGaanSlapen, 'minutes') - (hours * 60), 2, 0);
+      const diff = tijdOpgestaan.diff(tijdGaanSlapen, 'seconds');
+      const tijdGeslapen = moment().startOf('day').seconds(diff).format('HH:mm');
       tijdGaanSlapen = tijdGaanSlapen.format(format);
       tijdOpgestaan = tijdOpgestaan.format(format);
 
@@ -47,10 +47,7 @@ function getResults(cb, id = 0) {
         tijdGaanSlapen,
         tijdOpgestaan,
         tijdGewenstOpstaan,
-        tijdGeslapen: {
-          hours,
-          minutes,
-        },
+        tijdGeslapen
       };
     });
 

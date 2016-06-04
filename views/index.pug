@@ -25,9 +25,8 @@ block content
 		tbody
 			for result in results
 				tr
-					- const {tijdGaanSlapen, tijdOpgestaan, tijdGewenstOpstaan} = result
-					- const {hours, minutes} = result.tijdGeslapen
+					- const {tijdGaanSlapen, tijdOpgestaan, tijdGewenstOpstaan, tijdGeslapen} = result
 					td= tijdGaanSlapen
 					td= tijdGewenstOpstaan
 					td= tijdOpgestaan
-					td= hours + ':' + minutes
+					td= tijdGeslapen
