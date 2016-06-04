@@ -1,4 +1,4 @@
-import {createConnection} from 'mysql';
+import { createConnection } from 'mysql';
 
 /**
  * @type {object} settings - Object containing all the settings
@@ -14,17 +14,17 @@ export const settings = {
   user: process.env.DB_USERNAME || 'root',
   password: process.env.DB_PASSWORD || 'root',
   schema: process.env.DB_DATABASENAME || 'pixelsleep',
-}
+};
 
 export const connection = createConnection(settings);
 
 export function connect() {
   connection.connect(err => {
     // If there is an error, display the message and exit the program
-    if(err) {
-      console.error('Error connection' + err.stack);
+    if (err) {
+      console.error(`Error connection ${err.stack}`);
       process.exit();
     }
-    console.log('Succesfully connected as id %d', connection.threadId);
+    console.log(`Succesfully connected as id ${connection.threadId}`);
   });
 }

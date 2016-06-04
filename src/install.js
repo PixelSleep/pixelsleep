@@ -1,4 +1,4 @@
-import {connect, connection, settings} from './database';
+import { connect, connection, settings } from './database';
 
 // Connect to the database
 connect();
@@ -13,10 +13,10 @@ connection.query(`
     PRIMARY KEY (\`id\`)
   );
 `, err => {
-  if(err) console.log(`Err: ${err}`);
+  if (err) console.log(`Err: ${err}`);
 });
 
 // End the connection
 connection.end(err => {
-  if(err) console.error('Error ending connection' + err.stack);
+  if (err) console.error(`Error ending connection ${err.stack}`);
 });

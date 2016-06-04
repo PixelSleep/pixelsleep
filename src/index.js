@@ -1,5 +1,4 @@
 import express from 'express';
-import path from 'path';
 import mysql from 'mysql';
 import * as database from './database';
 import moment from 'moment';
@@ -9,7 +8,7 @@ import leftPad from 'left-pad';
 database.connect();
 
 // Init the express server
-let app = express();
+const app = express();
 
 // The public directory for static files is public
 app.use(express.static('public'));
@@ -29,31 +28,33 @@ function getResults(cb, id = 0) {
   const query = mysql.format(sql, inserts);
 
   database.connection.query(query, (err, results) => {
-    if(err) console.error(err);
+    if (err) console.error(err);
     const format = 'DD/MM/YY HH:mm';
 
     // Iterate trough each result and give them the format required.
     // Also calculate the time they slept.
-    results.map((result) => {
-      try {
-        const tijd_gaan_slapen = moment(result.tijd_gaan_slapen);
-        result.tijd_gaan_slapen = tijd_gaan_slapen.format(format);
+    const mappedResults = results.map((result) => {
+      let tijdGaanSlapen = moment(result.tijd_gaan_slapen);
+      let tijdOpgestaan = moment(result.tijd_opgestaan);
+      let tijdGewenstOpstaan = tijdGaanSlapen.clone().add(result.gewenesteSlaaptijd, 'seconds');
+      const hours = leftPad(tijdOpgestaan.diff(tijdGaanSlapen, 'hours'), 2, 0);
+      const minutes = leftPad(tijdOpgestaan.diff(tijdGaanSlapen, 'minutes') - (hours * 60), 2, 0);
+      tijdGaanSlapen = tijdGaanSlapen.format(format);
+      tijdOpgestaan = tijdOpgestaan.format(format);
+      tijdGewenstOpstaan = tijdGewenstOpstaan.format(format);
 
-        const tijd_opgestaan = moment(result.tijd_opgestaan);
-        result.tijd_opgestaan = tijd_opgestaan.format(format);
-
-        const tijd_gewenst_opstaan = tijd_gaan_slapen.clone().add(result.gewenste_slaaptijd, 'seconds');
-        result.tijd_gewenst_opstaan = tijd_gewenst_opstaan.format(format);
-
-        const hours = leftPad(tijd_opgestaan.diff(tijd_gaan_slapen, 'hours'), 2, 0);
-        const minutes = leftPad(tijd_opgestaan.diff(tijd_gaan_slapen, 'minutes') - (hours * 60), 2, 0);
-        result.tijd_geslapen = {hours, minutes};
-      } catch (e) {
-        console.error(e);
-      }
-      return result;
+      return {
+        tijdGaanSlapen,
+        tijdOpgestaan,
+        tijdGewenstOpstaan,
+        tijdGeslapen: {
+          hours,
+          minutes,
+        },
+      };
     });
-    cb(results);
+
+    cb(mappedResults);
   });
 }
 
@@ -63,7 +64,7 @@ function getResults(cb, id = 0) {
  */
 app.get('/', (req, res) => {
   getResults((results) => {
-    res.render('index.pug', {results});
+    res.render('index.pug', { results });
   });
 });
 
@@ -72,7 +73,7 @@ app.get('/', (req, res) => {
  * Information about how the app works
  */
 app.get('/hoe', (req, res) => {
-  res.render('hoe.pug')
+  res.render('hoe.pug');
 });
 
 /**
@@ -81,7 +82,7 @@ app.get('/hoe', (req, res) => {
  */
 app.get('/over', (req, res) => {
   res.render('over.pug');
-})
+});
 
 // Listen for requests on port 3000
 app.listen(3000, () => {
