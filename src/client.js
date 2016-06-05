@@ -5,7 +5,7 @@ import * as time from './time';
 function getClock() {
     // Get Current Time
   const d = new Date();
-  const str = `${time.pad(d.getHours())}:${time.pad(d.getMinutes()())}:${time.pad(d.getSeconds())}`;
+  const str = `${time.pad(d.getHours())}:${time.pad(d.getMinutes())}:${time.pad(d.getSeconds())}`;
 
   // Get the Context 2D or 3D
   const clock = document.getElementById('clock');
