@@ -2,13 +2,13 @@
 <form id="tijden" method="post" action="/api/instellen-van-tijden">
   <legend>Wekker instellen</legend>
 
-  <label for="opstaan">Opstaan</label>
+  <label for="gaanSlapen">Gaan slapen: </label>
+  <input type="time" name="slapen" required>
+
+  <label for="opstaan">Opstaan: </label>
   <input type="time" name="opstaan" required>
 
-  <label for="gaanSlapen"> Gaan slapen</label>
-  <input type="time" name="gaanSlapen" required>
-
-  <label for="slaaptijd">Slaaptijd</label>
+  <label for="slaaptijd">Slaaptijd: </label>
   <input type="time" name="slaaptijd" readonly>
 
   <input type="submit" value="Bevestingen">
@@ -34,3 +34,5 @@
     {{/each}}
   </tbody>
 </table>
+
+<script src="js/bundle.js"></script>
