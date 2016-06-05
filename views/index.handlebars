@@ -1,0 +1,36 @@
+<canvas class="clock" width="400" height="200"></canvas>
+<form id="tijden" method="post" action="/api/instellen-van-tijden">
+  <legend>Wekker instellen</legend>
+
+  <label for="opstaan">Opstaan</label>
+  <input type="time" name="opstaan" required>
+
+  <label for="gaanSlapen"> Gaan slapen</label>
+  <input type="time" name="gaanSlapen" required>
+
+  <label for="slaaptijd">Slaaptijd</label>
+  <input type="time" name="slaaptijd" readonly>
+
+  <input type="submit" value="Bevestingen">
+
+</form>
+<table class="tijd" border="1">
+  <thead>
+    <tr>
+      <th>Tijd gaan slapen</th>
+      <th>Gewenste tijd opstaan</th>
+      <th>Tijd opgestaan</th>
+      <th>Tijd geslapen</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each results}}
+      <tr>
+        <td>{{this.tijdGaanSlapen}}</td>
+        <td>{{this.tijdGewenstOpstaan}}</td>
+        <td>{{this.tijdOpgestaan}}</td>
+        <td>{{this.tijdGeslapen}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
