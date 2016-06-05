@@ -1,4 +1,8 @@
-import leftPad from 'left-pad';
+export function pad(number) {
+  let s = number.toString();
+  while (s.length < 2) s = `0${s}`;
+  return s;
+}
 
 // Calculating time difference
 export function calculateDifference(time1, time2) {
@@ -11,10 +15,6 @@ export function calculateDifference(time1, time2) {
       hour: parse(time, 0),
       minute: parse(time, 1),
     };
-  }
-
-  function pad(string) {
-    return leftPad(string, 2, '0');
   }
 
   const firstTime = makeObject(time1);

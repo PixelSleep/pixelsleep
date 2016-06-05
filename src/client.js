@@ -3,17 +3,9 @@ import * as time from './time';
 
 // Clock
 function getClock() {
-  function pad(num, size) {
-    let s = num.toString();
-    while (s.length < size) {
-      s = `0${s}`;
-    }
-    return s;
-  }
-
-  // Get Current Time
+    // Get Current Time
   const d = new Date();
-  const str = `${pad(d.getHours(), 2)}:${pad(d.getMinutes(), 2)}:${pad(d.getSeconds(), 2)}`;
+  const str = `${time.pad(d.getHours())}:${time.pad(d.getMinutes()())}:${time.pad(d.getSeconds())}`;
 
   // Get the Context 2D or 3D
   const clock = document.getElementById('clock');

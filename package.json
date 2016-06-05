@@ -22,7 +22,6 @@
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "jquery": "^2.2.4",
-    "left-pad": "^1.1.0",
     "moment": "^2.13.0",
     "mysql": "^2.10.2"
   },
