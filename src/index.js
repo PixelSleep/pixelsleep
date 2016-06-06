@@ -105,7 +105,7 @@ app.post('/api/instellen-van-tijden', (req, res) => {
     mode: 0o666,
     flag: 'w',
   }, (err) => {
-    if(err) {
+    if (err) {
       console.error(err);
       res.send(`Error! ${err}`);
     }

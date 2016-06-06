@@ -3,3 +3,4 @@ bin/
 .vagrant/
 website/
 public/js/bundle.js
+npm-debug.log
