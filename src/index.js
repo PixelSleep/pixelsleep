@@ -3,6 +3,10 @@ import mysql from 'mysql';
 import * as database from './database';
 import moment from 'moment';
 import exphbs from 'express-handlebars';
+import bodyParser from 'body-parser';
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
 
 // Connect to the datase
 database.connect();
@@ -15,6 +19,10 @@ app.use(express.static('public'));
 // Setup views
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
+// To get the post params if there is a POST req
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 function getResults(cb, id = 0) {
   const sql = `SELECT \`tijd_gaan_slapen\`, \`tijd_opgestaan\`, \`gewenste_slaaptijd\`
@@ -84,6 +92,25 @@ app.get('/hoe', (req, res) => {
  */
 app.get('/over', (req, res) => {
   res.render('over');
+});
+
+/**
+ * POST: ./api/instellen-van-tijden
+ * Configuring time
+ */
+app.post('/api/instellen-van-tijden', (req, res) => {
+  const filePath = path.join(os.homedir(), 'pixelsleep', 'settings.json');
+  fs.writeFile(filePath, JSON.stringify(req.body), {
+    encoding: 'utf-8',
+    mode: 0o666,
+    flag: 'w',
+  }, (err) => {
+    if(err) {
+      console.error(err);
+      res.send(`Error! ${err}`);
+    }
+  });
+  res.send('Updated times');
 });
 
 // Listen for requests on port 3000

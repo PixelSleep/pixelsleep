@@ -1,15 +1,14 @@
 <canvas id="clock" width="400" height="200"></canvas>
-<form id="tijden" method="post" action="/api/instellen-van-tijden">
-  <legend>Wekker instellen</legend>
-
-  <label for="gaanSlapen">Gaan slapen: </label>
-  <input type="time" name="slapen" required>
+<h3>Wekker instellen</h3>
+<form id="tijden" method="POST" action="/api/instellen-van-tijden">
+  <label for="slapen">Gaan slapen: </label>
+  <input type="time" name="slapen" id="slapen" required>
 
   <label for="opstaan">Opstaan: </label>
-  <input type="time" name="opstaan" required>
+  <input type="time" name="opstaan" id="opstaan" required>
 
   <label for="slaaptijd">Slaaptijd: </label>
-  <input type="time" name="slaaptijd" readonly>
+  <input type="time" name="slaaptijd" id="slaaptijd" readonly>
 
   <input type="submit" value="Bevestingen">
 </form>

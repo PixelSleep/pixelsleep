@@ -19,6 +19,7 @@
   "author": "Robin Van den Broeck <robin.broeck@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "jquery": "^2.2.4",
